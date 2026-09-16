@@ -1,0 +1,19 @@
+Задание 1 (средней сложности): установить Git и настроить имя, email
+
+=== git --version ===
+git version 2.48.1
+
+=== Команды настройки ===
+git config --global user.name "Areg Sarkisyan"
+git config --global user.email "areg.sarkisyan.99@mail.ru"
+
+=== git config --global --list ===
+user.name=Areg Sarkisyan
+user.email=areg.sarkisyan.99@mail.ru
+
+=== git config user.name / user.email (внутри репозитория) ===
+Areg Sarkisyan
+areg.sarkisyan.99@mail.ru
+
+=== git log --format='%h | %an <%ae> | %s' (автор первого коммита) ===
+12f45cf | Areg Sarkisyan <areg.sarkisyan.99@mail.ru> | feat: create main.py with greet function
