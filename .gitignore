@@ -1,0 +1,20 @@
+# Байт-код Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Переменные окружения и секреты
+.env
+
+# Виртуальные окружения
+.venv/
+venv/
+
+# Кэш инструментов
+.pytest_cache/
+.mypy_cache/
+
+# Файлы IDE и ОС
+.vscode/
+.idea/
+.DS_Store
