@@ -1,0 +1,49 @@
+Задание 7 (средней сложности): создать файл .gitignore для Python
+
+=== cat .gitignore ===
+# Байт-код Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Переменные окружения и секреты
+.env
+
+# Виртуальные окружения
+.venv/
+venv/
+
+# Кэш инструментов
+.pytest_cache/
+.mypy_cache/
+
+# Файлы IDE и ОС
+.vscode/
+.idea/
+.DS_Store
+
+=== Генерация файлов, которые должны игнорироваться ===
+python3 -c "import main"        # создаёт __pycache__/main.cpython-310.pyc
+echo "SECRET_TOKEN=example" > .env
+
+=== ls -a ===
+.
+..
+.env
+.git
+.gitignore
+__pycache__
+git_setup.txt
+gitignore_check.txt
+main.py
+
+=== git status --short --ignored (! = игнорируется) ===
+?? gitignore_check.txt
+!! .env
+!! __pycache__/
+
+=== git check-ignore -v __pycache__/main.cpython-310.pyc .env ===
+.gitignore:2:__pycache__/	__pycache__/main.cpython-310.pyc
+.gitignore:7:.env	.env
+
+Вывод: __pycache__/ и .env не попадают в индекс — git status их не предлагает добавить.
