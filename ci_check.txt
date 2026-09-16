@@ -1,0 +1,32 @@
+Задание 6 (повышенной сложности): настроить GitHub Actions для проверки Python-кода
+
+Файл workflow: .github/workflows/python-check.yml
+Триггеры: push в main/feature, pull_request в main
+Матрица: Python 3.10 и 3.12 на ubuntu-latest
+Шаги: checkout (с submodules) -> setup-python -> pip install -r requirements-dev.txt -> flake8 . -> py_compile -> pytest -v
+
+=== Локальный прогон тех же шагов перед push ===
+
+$ python3 --version
+Python 3.10.11
+
+$ flake8 .
+(вывод пустой — замечаний нет, код выхода 0)
+
+$ python -m py_compile main.py feature.py test_main.py
+(ошибок синтаксиса нет, код выхода 0)
+
+$ pytest -v
+============================= test session starts ==============================
+platform darwin -- Python 3.10.11, pytest-7.1.3, pluggy-1.6.0 -- /Library/Frameworks/Python.framework/Versions/3.10/bin/python3
+rootdir: /Users/areg/Downloads/sarkisyan_lab_1
+plugins: pythonpath-0.7.3, django-4.5.2
+collecting ... collected 3 items
+
+test_main.py::test_greet_default PASSED                                  [ 33%]
+test_main.py::test_greet_with_name PASSED                                [ 66%]
+test_main.py::test_greet_many PASSED                                     [100%]
+
+============================== 3 passed in 0.00s ===============================
+
+После git push результат запуска workflow доступен на GitHub во вкладке Actions репозитория.
