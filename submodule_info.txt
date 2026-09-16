@@ -1,0 +1,50 @@
+Задание 8 (повышенной сложности): использовать git submodules
+
+Подмодуль: https://github.com/octocat/Hello-World.git -> external/hello-world
+Команда:   git submodule add https://github.com/octocat/Hello-World.git external/hello-world
+
+=== cat .gitmodules ===
+[submodule "external/hello-world"]
+	path = external/hello-world
+	url = https://github.com/octocat/Hello-World.git
+
+=== git submodule status (хэш зафиксированного коммита подмодуля) ===
+ 7fd1a60b01f91b314f59955a4e4d4e80d8edf11d external/hello-world (heads/master)
+
+=== git ls-tree HEAD external (тип 'commit' — подмодуль хранится как указатель на коммит) ===
+160000 commit 7fd1a60b01f91b314f59955a4e4d4e80d8edf11d	external/hello-world
+
+=== cat external/hello-world/README ===
+Hello World!
+
+=== git log --oneline (история внутри подмодуля) ===
+7fd1a60 Merge pull request #6 from Spaceghost/patch-1
+7629413 New line at end of file. --Signed off by Spaceghost
+553c207 first commit
+
+=== Проверка: обычный git clone НЕ скачивает содержимое подмодуля ===
+$ git clone <repo> clone_plain && ls -A clone_plain/external/hello-world
+(содержимое каталога:)
+(каталог пустой)
+
+$ git submodule update --init --recursive   # инициализация подмодуля после clone
+Подмодуль «external/hello-world» (https://github.com/octocat/Hello-World.git) зарегистрирован по пути «external/hello-world»
+Клонирование в «/private/tmp/claude-501/-Users-areg-Downloads/38b0c665-5fde-44ec-9a1e-49fb77c5b04b/scratchpad/submodule_test/clone_plain/external/hello-world»...
+Submodule path 'external/hello-world': checked out '7fd1a60b01f91b314f59955a4e4d4e80d8edf11d'
+.git
+README
+
+=== Проверка: git clone --recurse-submodules скачивает подмодуль сразу ===
+$ git clone --recurse-submodules <repo> clone_recursive
+.git
+README
+ 7fd1a60b01f91b314f59955a4e4d4e80d8edf11d external/hello-world (heads/master)
+
+Полезные команды:
+  git submodule add <url> <path>          - добавить подмодуль
+  git submodule update --init --recursive - скачать подмодули после обычного clone
+  git submodule update --remote           - обновить подмодуль до последнего коммита его ветки
+  git clone --recurse-submodules <url>    - клонировать сразу с подмодулями
+
+Вывод: родительский репозиторий хранит только .gitmodules (url + path) и хэш коммита
+подмодуля (7fd1a60), а не его файлы; поэтому после clone подмодуль нужно инициализировать.
